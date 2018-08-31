@@ -7,9 +7,9 @@ by running the db seed command ```php artisan db:seed```
 Once you run that you can access various part of the website using the following information
 
 ## Admin Login
-**Username**: admin@cc.com  
+**Login**: admin@cc.com  
 **Password**: admin123 
 
 ## Runner Login
-**Username**: runner@cc.com  
+**Login**: runner@cc.com  
 **Password**: runner123
