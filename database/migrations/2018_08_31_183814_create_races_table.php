@@ -16,14 +16,9 @@ class CreateRacesTable extends Migration
         Schema::create('races', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('category_id')->unsigned()->nullable(); // races belong to a category
+            $table->string('slug');
+            $table->boolean('status')->default(true);
             $table->timestamps();
-
-            $table->foreign('category_id')
-                ->references('id')
-                ->on('categories')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
         });
     }
 
