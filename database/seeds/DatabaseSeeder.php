@@ -11,7 +11,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->command->call('migrate:refresh -f');
-        $this->call(LoadFixtures::class);
+        if (in_array(getenv('APP_ENV'), $this->getExecutableEnvironmentList())) {
+            $this->command->call('migrate:refresh');
+            $this->call(LoadFixtures::class);
+        }
+    }
+
+    /**
+     * Only run the seeder on the app environment listed below
+     * @return array
+     */
+    private function getExecutableEnvironmentList()
+    {
+        return [
+            'local',
+            'staging'
+        ];
     }
 }

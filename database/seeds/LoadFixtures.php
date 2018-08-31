@@ -3,6 +3,7 @@
 use App\Repositories\UserRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\RaceRepository;
+use App\Services\LoadFixtureService;
 
 class LoadFixtures extends \Illuminate\Database\Seeder
 {
@@ -18,22 +19,29 @@ class LoadFixtures extends \Illuminate\Database\Seeder
      * @var RaceRepository
      */
     private $raceRepository;
+    /**
+     * @var LoadFixtureService
+     */
+    private $loadFixtureService;
 
     /**
      * LoadFixtures constructor.
      * @param UserRepository $userRepository
      * @param CategoryRepository $categoryRepository
      * @param RaceRepository $raceRepository
+     * @param LoadFixtureService $loadFixtureService
      */
     public function __construct(
         UserRepository $userRepository,
         CategoryRepository $categoryRepository,
-        RaceRepository $raceRepository
+        RaceRepository $raceRepository,
+        LoadFixtureService $loadFixtureService
     ) {
 
         $this->userRepository = $userRepository;
         $this->categoryRepository = $categoryRepository;
         $this->raceRepository = $raceRepository;
+        $this->loadFixtureService = $loadFixtureService;
     }
 
     public function run()
@@ -41,6 +49,42 @@ class LoadFixtures extends \Illuminate\Database\Seeder
         $users = $this->createUsers();
         $categories = $this->createCategories();
         $races = $this->createRaces();
+    }
+
+    /**
+     * Create 2 test accounts (admin and runner)
+     * Create additional random users
+     */
+    private function createCategories()
+    {
+        $categories = [
+            'Under 18\'s',
+            '18-30',
+            '31-45',
+            '46-60',
+            'seniors',
+        ];
+
+        foreach($categories as $category) {
+            $this->createCategory($category, true);
+        }
+
+        return $this->categoryRepository->getCategories();
+    }
+
+    /**
+     * Create a new category
+     *
+     * @param $category
+     * @param $status
+     * @return mixed
+     */
+    private function createCategory($category, $status)
+    {
+        return $this->categoryRepository->createCategory([
+            'name' => $category,
+            'status' => $status
+        ]);
     }
 
     /**
@@ -55,9 +99,9 @@ class LoadFixtures extends \Illuminate\Database\Seeder
         // create random users (with random name, email and password)
         for ($i=0;$i <= 20;$i++) {
             $this->createUser(
-                str_random(rand(6,12)),
-                str_random(4).'@'.str_random(6).'.com',
-                str_random(10)
+                $this->loadFixtureService->getRandomName(rand(6,12)),
+                $this->loadFixtureService->getRandomEmail(rand(4, 8)),
+                $this->loadFixtureService->getRandomName(8)
             );
         }
         return $this->userRepository->getUsers();
@@ -75,7 +119,42 @@ class LoadFixtures extends \Illuminate\Database\Seeder
         $this->userRepository->createUser([
             'name' => $name,
             'email' => $email,
-            'password' => $password
+            'password' => $password,
+            'status' => true
+        ]);
+    }
+
+    /**
+     * Create 2 test accounts (admin and runner)
+     * Create additional random users
+     */
+    private function createRaces()
+    {
+        $categories = [
+            'foot race finale',
+            'qualifier',
+            'warm up'
+        ];
+
+        foreach($categories as $category) {
+            $this->createRace($category, true);
+        }
+
+        return $this->categoryRepository->getCategories();
+    }
+
+    /**
+     * Create a new category
+     *
+     * @param $race
+     * @param $status
+     * @return mixed
+     */
+    private function createRace($race, $status)
+    {
+        return $this->raceRepository->createRace([
+            'name' => $race,
+            'status' => $status
         ]);
     }
 }
