@@ -21,7 +21,7 @@ class RaceRepository
     }
 
     /**
-     * Get all the available races
+     * Get all the available race
      * @param null $status
      * @return Race[]
      */
@@ -87,6 +87,10 @@ class RaceRepository
         // override slug if required
         if (array_key_exists('slug', $data) && !empty($data['slug'])) {
             $newData['slug'] = str_slug($data['slug']);
+        }
+
+        if (array_key_exists('description', $data) && !empty($data['description'])) {
+            $newData['description'] = str_slug($data['description']);
         }
 
         $newData['status'] = isset($data['status']) && (int) $data['status'] > 0 ? 1 : 0;

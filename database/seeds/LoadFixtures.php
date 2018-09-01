@@ -4,8 +4,9 @@ use App\Repositories\UserRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\RaceRepository;
 use App\Services\LoadFixtureService;
+use Illuminate\Database\Seeder;
 
-class LoadFixtures extends \Illuminate\Database\Seeder
+class LoadFixtures extends Seeder
 {
     /**
      * @var UserRepository
@@ -37,7 +38,6 @@ class LoadFixtures extends \Illuminate\Database\Seeder
         RaceRepository $raceRepository,
         LoadFixtureService $loadFixtureService
     ) {
-
         $this->userRepository = $userRepository;
         $this->categoryRepository = $categoryRepository;
         $this->raceRepository = $raceRepository;
@@ -64,11 +64,9 @@ class LoadFixtures extends \Illuminate\Database\Seeder
             '46-60',
             'seniors',
         ];
-
         foreach($categories as $category) {
             $this->createCategory($category, true);
         }
-
         return $this->categoryRepository->getCategories();
     }
 
@@ -135,11 +133,11 @@ class LoadFixtures extends \Illuminate\Database\Seeder
             'qualifier',
             'warm up'
         ];
-
         foreach($categories as $category) {
             $this->createRace($category, true);
         }
-
+        $this->createRace('cannon', false);
+        $this->createRace('starter', false);
         return $this->categoryRepository->getCategories();
     }
 
@@ -154,6 +152,7 @@ class LoadFixtures extends \Illuminate\Database\Seeder
     {
         return $this->raceRepository->createRace([
             'name' => $race,
+            'description' => $this->loadFixtureService->getRandomText(),
             'status' => $status
         ]);
     }

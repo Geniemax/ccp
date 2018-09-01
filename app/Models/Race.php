@@ -17,6 +17,14 @@ class Race extends Model
     /**
      * @return string
      */
+    public function getId()
+    {
+        return $this->getAttribute('id');
+    }
+
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->getAttribute('name');
@@ -31,10 +39,18 @@ class Race extends Model
     }
 
     /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->getAttribute('description');
+    }
+
+    /**
      * @return boolean
      */
     public function getStatus()
     {
-        return $this->getAttribute('status');
+        return (bool) $this->getAttribute('status');
     }
 }

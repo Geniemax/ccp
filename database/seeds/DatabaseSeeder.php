@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         if (in_array(getenv('APP_ENV'), $this->getExecutableEnvironmentList())) {
-            $this->command->call('migrate:refresh');
+            $this->command->call('migrate:fresh');
             $this->call(LoadFixtures::class);
         }
     }
