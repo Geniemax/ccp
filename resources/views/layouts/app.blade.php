@@ -60,7 +60,6 @@
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <a class="dropdown-item" href="{{ route('admin') }}">Admin</a>
                                     <a class="dropdown-item" href="{{ route('races') }}">Races</a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

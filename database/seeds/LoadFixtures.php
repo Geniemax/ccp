@@ -107,7 +107,6 @@ class LoadFixtures extends Seeder
      */
     private function createUsers()
     {
-        $this->createUser('admin', 'admin@cc.com', 'admin123');
         $this->createUser('runner', 'runner@cc.com', 'runner123');
 
         // create random users (with random name, email and password)
