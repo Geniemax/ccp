@@ -21,10 +21,6 @@ Route::group([], function($router) {
 
     $router->get('/home', 'HomeController@index')->name('home');
 
-    Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function($router) {
-        $router->get('races', ['as' => 'admin', 'uses' => 'RaceController@index']);
-    });
-
     Route::group(['prefix' => 'races', 'namespace' => 'Web'], function($router) {
         $router->get('', ['as' => 'races', 'uses' => 'RaceController@index']);
         $router->get('show/{raceId}', ['as' => 'races.show', 'uses' => 'RaceController@show']);
