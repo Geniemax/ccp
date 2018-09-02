@@ -15,7 +15,7 @@ class Race extends Model
     ];
 
     /**
-     * @return string
+     * @return integer
      */
     public function getId()
     {

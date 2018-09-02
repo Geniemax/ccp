@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -13,6 +14,14 @@ class Category extends Model
         'slug',
         'status'
     ];
+
+    /**
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->getAttribute('id');
+    }
 
     /**
      * @return string

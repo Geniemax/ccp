@@ -28,5 +28,7 @@ Route::group([], function($router) {
     Route::group(['prefix' => 'races', 'namespace' => 'Web'], function($router) {
         $router->get('', ['as' => 'races', 'uses' => 'RaceController@index']);
         $router->get('show/{raceId}', ['as' => 'races.show', 'uses' => 'RaceController@show']);
+        $router->get('{raceId}/category-users/{categoryId}', ['as' => 'races.category', 'uses' => 'RaceController@getCategoryUsers']);
+        $router->get('user/{userId}', ['as' => 'races.user', 'uses' => 'RaceController@getRaceUser']);
     });
 });

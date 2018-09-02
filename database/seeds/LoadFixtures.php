@@ -49,6 +49,22 @@ class LoadFixtures extends Seeder
         $users = $this->createUsers();
         $categories = $this->createCategories();
         $races = $this->createRaces();
+
+        foreach($users as $user) {
+            // add random category for user
+            $user->categories()->attach([
+                array_rand($categories->pluck('id')->toArray())
+            ]);
+        }
+
+        foreach($users as $user) {
+            // add user to random race
+            $user->races()->attach([
+                array_rand($races->pluck('id')->toArray()) => [
+                    'start_time' => \Carbon\Carbon::now()->addMinute(rand(10,45))
+                ]
+            ]);
+        }
     }
 
     /**

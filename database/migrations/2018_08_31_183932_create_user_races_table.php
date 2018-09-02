@@ -17,12 +17,9 @@ class CreateUserRacesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('race_id')->unsigned()->nullable();
-            $table->dateTime('start_time');
+            $table->dateTime('start_time')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('race_id')->references('id')->on('races')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

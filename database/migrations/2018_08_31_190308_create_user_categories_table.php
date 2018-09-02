@@ -19,14 +19,6 @@ class CreateUserCategoriesTable extends Migration
             $table->integer('category_id')->unsigned()->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-
-            $table->foreign('category_id')
-                ->references('id')
-                ->on('categories')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
         });
     }
 
